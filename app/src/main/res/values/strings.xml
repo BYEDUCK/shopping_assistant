@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ShoppingAssistant</string>
+    <string name="product_score">%1$.1f/%2$d</string>
+    <string name="show_filter">Filter</string>
+    <string name="show_products">Show</string>
+    <string name="backend_base_url">http://10.0.2.2:8080</string>
+    <string name="products_query">Query:</string>
 </resources>
