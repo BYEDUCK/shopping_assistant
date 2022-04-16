@@ -3,6 +3,7 @@ package com.byeduck.shoppingassistant.products
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.byeduck.shoppingassistant.LoadingDialog
 import com.byeduck.shoppingassistant.R
@@ -51,6 +52,9 @@ class ProductListActivity : AppCompatActivity() {
             ProductsListElementAdapter(applicationContext, products)
         binding.productsListRecycleView.adapter = recyclerViewAdapter
         binding.productsListRecycleView.layoutManager = LinearLayoutManager(applicationContext)
+        binding.productsListRecycleView.addItemDecoration(
+            DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+        )
         loadingDialog.stopLoading()
     }
 }
