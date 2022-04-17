@@ -1,23 +1,28 @@
 package com.byeduck.shoppingassistant.products
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.byeduck.shoppingassistant.LoadingDialog
+import com.byeduck.shoppingassistant.MainActivity
 import com.byeduck.shoppingassistant.R
+import com.byeduck.shoppingassistant.ResponseHandler
 import com.byeduck.shoppingassistant.databinding.ActivityProductListBinding
+import com.byeduck.shoppingassistant.products.remote.ErrorResponse
 import com.byeduck.shoppingassistant.products.remote.Product
 import com.byeduck.shoppingassistant.products.remote.RetrofitProvider
 import com.byeduck.shoppingassistant.products.remote.ScrapAPI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.await
+import retrofit2.awaitResponse
 
 class ProductListActivity : AppCompatActivity() {
 
+    private val responseHandler = ResponseHandler()
     private lateinit var scrapApiService: ScrapAPI
     private lateinit var binding: ActivityProductListBinding
     private lateinit var loadingDialog: LoadingDialog
@@ -35,15 +40,30 @@ class ProductListActivity : AppCompatActivity() {
         loadingDialog = LoadingDialog(this)
         loadingDialog.startLoading()
         lifecycleScope.launch(Dispatchers.IO) {
-            val products = scrapApiService.getProducts(category, query).await()
+            val productsResponse = scrapApiService.getProducts(category, query).awaitResponse()
             withContext(Dispatchers.Main) {
-                initialize(products)
+                responseHandler.handleResponse(
+                    productsResponse,
+                    this@ProductListActivity::initialize,
+                    this@ProductListActivity::handleError
+                )
             }
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        loadingDialog.dismiss()
+    }
+
+    private fun goToMain() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun handleError(errorResponse: ErrorResponse) {
+        ErrorDialog(this, errorResponse)
+            .show(this::goToMain)
         loadingDialog.dismiss()
     }
 

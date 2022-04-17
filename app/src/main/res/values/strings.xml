@@ -7,4 +7,8 @@
     <string name="products_query">Query:</string>
     <string name="loading">Loading…</string>
     <string name="product_price">%1$.2f PLN</string>
+    <string name="error_status">Status: %1$d</string>
+    <string name="error_msg">Msg: %1$s</string>
+    <string name="error_request_id">Request ID: %1$s</string>
+    <string name="error_dismiss">Dismiss</string>
 </resources>
