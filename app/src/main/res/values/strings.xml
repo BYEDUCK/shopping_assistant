@@ -7,8 +7,14 @@
     <string name="products_query">Query:</string>
     <string name="loading">Loading…</string>
     <string name="product_price">%1$.2f PLN</string>
-    <string name="error_status">Status: %1$d</string>
-    <string name="error_msg">Msg: %1$s</string>
-    <string name="error_request_id">Request ID: %1$s</string>
+    <string name="error_status">Status:</string>
+    <string name="error_msg">Msg:</string>
+    <string name="error_request_id">Request ID:</string>
     <string name="error_dismiss">Dismiss</string>
+    <string name="factor_importance">Factor importance</string>
+    <string name="price">Price</string>
+    <string name="settings">SETTINGS</string>
+    <string name="rating">Rating</string>
+    <string name="brand">Brand</string>
+    <string name="save">SAVE</string>
 </resources>

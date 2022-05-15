@@ -13,6 +13,9 @@
         android:theme="@style/Theme.ShoppingAssistant"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".products.settings.SettingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".products.FilterActivity"
             android:exported="false" />
         <activity

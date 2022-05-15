@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.byeduck.shoppingassistant.databinding.ActivityMainBinding
 import com.byeduck.shoppingassistant.products.FilterActivity
+import com.byeduck.shoppingassistant.products.settings.SettingsActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,6 +13,10 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         binding.enterFilterButton.setOnClickListener {
             val intent = Intent(this, FilterActivity::class.java)
+            startActivity(intent)
+        }
+        binding.enterSettingsButton.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
         }
         setContentView(binding.root)
