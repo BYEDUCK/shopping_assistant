@@ -11,7 +11,7 @@
     <string name="error_msg">Msg:</string>
     <string name="error_request_id">Request ID:</string>
     <string name="error_dismiss">Dismiss</string>
-    <string name="factor_importance">Factor importance</string>
+    <string name="factor_importance">Factors importance</string>
     <string name="price">Price</string>
     <string name="settings">SETTINGS</string>
     <string name="rating">Rating</string>
