@@ -6,14 +6,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.byeduck.shoppingassistant.MainActivity
 import com.byeduck.shoppingassistant.databinding.ActivitySettingsBinding
+import com.byeduck.shoppingassistant.products.*
 
 class SettingsActivity : AppCompatActivity() {
-
-    private val prefFileName = "byeduck_sa_preferences"
-    private val priceImportancePrefName = "price_importance"
-    private val brandImportancePrefName = "brand_importance"
-    private val ratingImportancePrefName = "rating_importance"
-    private val importanceDefaultValue = 0
 
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var binding: ActivitySettingsBinding
@@ -24,16 +19,20 @@ class SettingsActivity : AppCompatActivity() {
         binding.priceSlider.setLabelFormatter(this::percentageLabelFormatter)
         binding.brandSlider.setLabelFormatter(this::percentageLabelFormatter)
         binding.ratingSlider.setLabelFormatter(this::percentageLabelFormatter)
-        sharedPreferences = getSharedPreferences(prefFileName, MODE_PRIVATE)
+        binding.aiSlider.setLabelFormatter(this::percentageLabelFormatter)
+        sharedPreferences = getSharedPreferences(PREF_FILE_NAME, MODE_PRIVATE)
         val savedPriceImportance =
-            sharedPreferences.getInt(priceImportancePrefName, importanceDefaultValue)
+            sharedPreferences.getInt(PRICE_IMPORTANCE_PREF_NAME, IMPORTANCE_DEFAULT_VALUE)
         val savedBrandImportance =
-            sharedPreferences.getInt(brandImportancePrefName, importanceDefaultValue)
+            sharedPreferences.getInt(BRAND_IMPORTANCE_PREF_NAME, IMPORTANCE_DEFAULT_VALUE)
         val savedRatingImportance =
-            sharedPreferences.getInt(ratingImportancePrefName, importanceDefaultValue)
+            sharedPreferences.getInt(RATING_IMPORTANCE_PREF_NAME, IMPORTANCE_DEFAULT_VALUE)
+        val savedAiImportance =
+            sharedPreferences.getInt(AI_IMPORTANCE_PREF_NAME, IMPORTANCE_DEFAULT_VALUE)
         binding.priceSlider.value = savedPriceImportance.toFloat()
         binding.brandSlider.value = savedBrandImportance.toFloat()
         binding.ratingSlider.value = savedRatingImportance.toFloat()
+        binding.aiSlider.value = savedAiImportance.toFloat()
         binding.settingSaveButton.setOnClickListener { saveSettings() }
         binding.settingsCancelButton.setOnClickListener { cancelSettings() }
         setContentView(binding.root)
@@ -49,10 +48,12 @@ class SettingsActivity : AppCompatActivity() {
         val priceImportance = binding.priceSlider.value.toInt()
         val brandImportance = binding.brandSlider.value.toInt()
         val ratingImportance = binding.ratingSlider.value.toInt()
+        val aiImportance = binding.aiSlider.value.toInt()
         sharedPreferences.edit()
-            .putInt(priceImportancePrefName, priceImportance)
-            .putInt(brandImportancePrefName, brandImportance)
-            .putInt(ratingImportancePrefName, ratingImportance)
+            .putInt(PRICE_IMPORTANCE_PREF_NAME, priceImportance)
+            .putInt(BRAND_IMPORTANCE_PREF_NAME, brandImportance)
+            .putInt(RATING_IMPORTANCE_PREF_NAME, ratingImportance)
+            .putInt(AI_IMPORTANCE_PREF_NAME, aiImportance)
             .apply()
         goToMainActivity()
     }

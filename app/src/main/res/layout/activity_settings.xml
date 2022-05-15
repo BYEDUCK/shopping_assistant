@@ -36,7 +36,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:text="@string/price"
-            android:textAlignment="center" />
+            android:paddingHorizontal="20dp" />
 
         <com.google.android.material.slider.Slider
             android:id="@+id/priceSlider"
@@ -65,7 +65,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:text="@string/rating"
-            android:textAlignment="center" />
+            android:paddingHorizontal="20dp" />
 
         <com.google.android.material.slider.Slider
             android:id="@+id/ratingSlider"
@@ -79,6 +79,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/brandLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="10dp"
@@ -93,7 +94,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:text="@string/brand"
-            android:textAlignment="center" />
+            android:paddingHorizontal="20dp" />
 
         <com.google.android.material.slider.Slider
             android:id="@+id/brandSlider"
@@ -103,6 +104,36 @@
             android:stepSize="1"
             android:valueFrom="0"
             android:valueTo="100" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/brandLayout">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="@string/ai"
+            android:paddingHorizontal="20dp" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/aiSlider"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:stepSize="1"
+            android:valueFrom="0"
+            android:valueTo="100"
+            app:thumbColor="@color/atomic_tangerine"
+            app:trackColorActive="@color/atomic_tangerine" />
 
     </LinearLayout>
 
