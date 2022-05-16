@@ -4,7 +4,7 @@ import com.byeduck.shoppingassistant.db.Identifiable
 
 abstract class MergeHandler<T : Identifiable> {
 
-    fun handleMerge(base: List<T>, new: List<T>): ChangeList<T> {
+    fun handleMerge(base: List<T>, new: List<T>): PositionalChangeList<T> {
         val baseIdToPositionMap: Map<Long, Int> =
             base.mapIndexed { index, entity -> entity.id to index }.toMap()
         val newIdToEntityMap: Map<Long, T> = new.associateBy { it.id }
@@ -29,6 +29,6 @@ abstract class MergeHandler<T : Identifiable> {
                 }
             }
         }
-        return ChangeList(toBeModified, toBeAdded, toBeRemoved)
+        return PositionalChangeList(toBeModified, toBeAdded, toBeRemoved)
     }
 }
