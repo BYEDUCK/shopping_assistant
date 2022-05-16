@@ -1,4 +1,4 @@
-package com.byeduck.shoppingassistant.products.remote
+package com.byeduck.shoppingassistant.remote
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

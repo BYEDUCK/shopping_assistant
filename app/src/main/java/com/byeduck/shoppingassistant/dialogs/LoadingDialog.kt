@@ -1,4 +1,4 @@
-package com.byeduck.shoppingassistant
+package com.byeduck.shoppingassistant.dialogs
 
 import android.app.Activity
 import android.app.AlertDialog

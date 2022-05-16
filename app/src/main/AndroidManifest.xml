@@ -13,7 +13,10 @@
         android:theme="@style/Theme.ShoppingAssistant"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".products.settings.SettingsActivity"
+            android:name=".searches.SearchListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".settings.SettingsActivity"
             android:exported="false" />
         <activity
             android:name=".products.FilterActivity"

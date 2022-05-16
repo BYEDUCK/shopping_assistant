@@ -18,4 +18,6 @@
     <string name="brand">Brand</string>
     <string name="save">SAVE</string>
     <string name="ai">AI</string>
+    <string name="my_searches">My searches</string>
+    <string name="date_fromat">dd/MM/yyyy hh:mm</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.byeduck.shoppingassistant.products.remote
+package com.byeduck.shoppingassistant.remote
 
 data class ErrorResponse(val status: Int, val error: String, val requestId: String) {
 

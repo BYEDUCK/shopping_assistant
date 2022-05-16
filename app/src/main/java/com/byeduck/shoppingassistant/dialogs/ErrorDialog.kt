@@ -1,9 +1,9 @@
-package com.byeduck.shoppingassistant.products
+package com.byeduck.shoppingassistant.dialogs
 
 import android.app.Activity
 import android.app.AlertDialog
 import com.byeduck.shoppingassistant.databinding.ErrorDialogBinding
-import com.byeduck.shoppingassistant.products.remote.ErrorResponse
+import com.byeduck.shoppingassistant.remote.ErrorResponse
 
 class ErrorDialog(activity: Activity, error: ErrorResponse) {
 

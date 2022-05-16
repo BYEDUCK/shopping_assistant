@@ -1,11 +1,11 @@
-package com.byeduck.shoppingassistant.products.db
+package com.byeduck.shoppingassistant.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.byeduck.shoppingassistant.products.db.dao.SearchEntityDao
+import com.byeduck.shoppingassistant.db.dao.SearchEntityDao
 
 @Database(entities = [SearchEntity::class], version = 1)
 @TypeConverters(Converters::class)

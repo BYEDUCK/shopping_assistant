@@ -5,7 +5,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.byeduck.shoppingassistant.databinding.ActivityMainBinding
 import com.byeduck.shoppingassistant.products.FilterActivity
-import com.byeduck.shoppingassistant.products.settings.SettingsActivity
+import com.byeduck.shoppingassistant.searches.SearchListActivity
+import com.byeduck.shoppingassistant.settings.SettingsActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,6 +18,10 @@ class MainActivity : AppCompatActivity() {
         }
         binding.enterSettingsButton.setOnClickListener {
             val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
+        }
+        binding.enterSearchesButton.setOnClickListener {
+            val intent = Intent(this, SearchListActivity::class.java)
             startActivity(intent)
         }
         setContentView(binding.root)

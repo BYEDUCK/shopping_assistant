@@ -1,6 +1,6 @@
 package com.byeduck.shoppingassistant
 
-import com.byeduck.shoppingassistant.products.remote.ErrorResponse
+import com.byeduck.shoppingassistant.remote.ErrorResponse
 import com.google.gson.Gson
 import io.vavr.control.Either
 import io.vavr.control.Try

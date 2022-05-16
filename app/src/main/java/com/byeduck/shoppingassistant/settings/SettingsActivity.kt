@@ -1,4 +1,4 @@
-package com.byeduck.shoppingassistant.products.settings
+package com.byeduck.shoppingassistant.settings
 
 import android.content.Intent
 import android.content.SharedPreferences
