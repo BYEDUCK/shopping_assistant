@@ -19,6 +19,7 @@ import com.byeduck.shoppingassistant.products.remote.Product
 import com.byeduck.shoppingassistant.products.remote.ScrapAPI
 import com.byeduck.shoppingassistant.remote.ErrorResponse
 import com.byeduck.shoppingassistant.remote.RetrofitProvider
+import com.byeduck.shoppingassistant.searches.SearchListActivity
 import com.byeduck.shoppingassistant.searches.SearchViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -49,6 +50,9 @@ class ProductListActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 )
                     .show()
+                val intent = Intent(this@ProductListActivity, SearchListActivity::class.java)
+                    .apply { putExtra("searchId", id) }
+                startActivity(intent)
             }
         }
         searchViewModel = ViewModelProvider(
