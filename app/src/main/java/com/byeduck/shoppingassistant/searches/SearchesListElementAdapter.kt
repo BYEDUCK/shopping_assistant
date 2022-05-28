@@ -3,6 +3,7 @@ package com.byeduck.shoppingassistant.searches
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.byeduck.shoppingassistant.LiveRecyclerViewAdapter
@@ -13,6 +14,7 @@ import java.time.format.DateTimeFormatter
 
 class SearchesListElementAdapter(
     val context: Context,
+    private val fragmentManager: FragmentManager,
     searchViewModel: SearchViewModel,
     lifecycleOwner: LifecycleOwner
 ) : LiveRecyclerViewAdapter<SearchEntity, SearchesListElementAdapter.SearchesListViewHolder>(
@@ -33,6 +35,11 @@ class SearchesListElementAdapter(
         position: Int,
         current: SearchEntity
     ) {
+        holder.binding.root.setOnLongClickListener {
+            val dialog = SearchActionsDialog()
+            dialog.show(fragmentManager, "search_actions")
+            true
+        }
         holder.binding.searchIdLabel.text = current.id.toString()
         holder.binding.searchDateLabel.text = current.date.format(
             DateTimeFormatter.ofPattern(context.getString(R.string.date_fromat))

@@ -20,4 +20,6 @@
     <string name="ai">AI</string>
     <string name="my_searches">My searches</string>
     <string name="date_fromat">dd/MM/yyyy hh:mm</string>
+    <string name="assist">ASSIST</string>
+    <string name="close">CLOSE</string>
 </resources>
