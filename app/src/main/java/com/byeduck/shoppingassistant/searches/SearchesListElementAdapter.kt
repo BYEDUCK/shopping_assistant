@@ -10,6 +10,7 @@ import com.byeduck.shoppingassistant.LiveRecyclerViewAdapter
 import com.byeduck.shoppingassistant.R
 import com.byeduck.shoppingassistant.databinding.ListelemSearchBinding
 import com.byeduck.shoppingassistant.db.SearchEntity
+import com.byeduck.shoppingassistant.dialogs.SearchActionsDialog
 import java.time.format.DateTimeFormatter
 
 class SearchesListElementAdapter(

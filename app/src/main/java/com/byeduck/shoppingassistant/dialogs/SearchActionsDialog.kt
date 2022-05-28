@@ -1,4 +1,4 @@
-package com.byeduck.shoppingassistant.searches
+package com.byeduck.shoppingassistant.dialogs
 
 import android.os.Bundle
 import android.view.LayoutInflater
