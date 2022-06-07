@@ -1,17 +1,18 @@
 package com.byeduck.shoppingassistant.dialogs
 
-import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
+import android.view.LayoutInflater
 import com.byeduck.shoppingassistant.databinding.ErrorDialogBinding
 import com.byeduck.shoppingassistant.remote.ErrorResponse
 
-class ErrorDialog(activity: Activity, error: ErrorResponse) {
+class ErrorDialog(layoutInflater: LayoutInflater, context: Context, error: ErrorResponse) {
 
     private val alertDialog: AlertDialog
 
     init {
-        val dialogBinding = ErrorDialogBinding.inflate(activity.layoutInflater)
-        alertDialog = AlertDialog.Builder(activity)
+        val dialogBinding = ErrorDialogBinding.inflate(layoutInflater)
+        alertDialog = AlertDialog.Builder(context)
             .setView(dialogBinding.root)
             .setCancelable(true)
             .create()
@@ -21,7 +22,7 @@ class ErrorDialog(activity: Activity, error: ErrorResponse) {
         dialogBinding.errorDismissButton.setOnClickListener { alertDialog.dismiss() }
     }
 
-    fun show(onDismissAction: () -> Unit) {
+    fun show(onDismissAction: () -> Unit = {}) {
         alertDialog.show()
         alertDialog.setOnDismissListener { onDismissAction() }
     }

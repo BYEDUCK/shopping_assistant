@@ -22,4 +22,7 @@
     <string name="date_fromat">dd/MM/yyyy hh:mm</string>
     <string name="assist">ASSIST</string>
     <string name="close">CLOSE</string>
+    <string name="home">Home</string>
+    <string name="settings_screen_title">Setting</string>
+    <string name="filter_screen_title">Search</string>
 </resources>

@@ -1,17 +1,16 @@
 package com.byeduck.shoppingassistant.products
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.byeduck.shoppingassistant.MainActivity
 import com.byeduck.shoppingassistant.R
 import com.byeduck.shoppingassistant.ResponseHandler
-import com.byeduck.shoppingassistant.databinding.ActivityProductListBinding
+import com.byeduck.shoppingassistant.databinding.FragmentProductListBinding
 import com.byeduck.shoppingassistant.db.SearchEntity
 import com.byeduck.shoppingassistant.dialogs.ErrorDialog
 import com.byeduck.shoppingassistant.dialogs.LoadingDialog
@@ -19,64 +18,57 @@ import com.byeduck.shoppingassistant.products.remote.Product
 import com.byeduck.shoppingassistant.products.remote.ScrapAPI
 import com.byeduck.shoppingassistant.remote.ErrorResponse
 import com.byeduck.shoppingassistant.remote.RetrofitProvider
-import com.byeduck.shoppingassistant.searches.SearchListActivity
 import com.byeduck.shoppingassistant.searches.SearchViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.awaitResponse
 
-class ProductListActivity : AppCompatActivity() {
+class ProductListFragment : Fragment() {
 
     private val responseHandler = ResponseHandler()
     private lateinit var scrapApiService: ScrapAPI
-    private lateinit var binding: ActivityProductListBinding
+    private lateinit var binding: FragmentProductListBinding
     private lateinit var searchViewModel: SearchViewModel
     private lateinit var loadingDialog: LoadingDialog
     private lateinit var category: String
     private lateinit var query: String
     private lateinit var products: List<Product>
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityProductListBinding.inflate(layoutInflater)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentProductListBinding.inflate(inflater, container, false)
         binding.persistSearchButton.setOnClickListener {
             val entity = SearchEntity(products, query, category)
             lifecycleScope.launch {
-                val id = searchViewModel.addShoppingList(entity)
-                Toast.makeText(
-                    this@ProductListActivity,
-                    "Created search with id $id",
-                    Toast.LENGTH_LONG
-                )
-                    .show()
-                val intent = Intent(this@ProductListActivity, SearchListActivity::class.java)
-                    .apply { putExtra("searchId", id) }
-                startActivity(intent)
+                searchViewModel.addShoppingList(entity)
             }
         }
         searchViewModel = ViewModelProvider(
-            this, ViewModelProvider.AndroidViewModelFactory.getInstance(application)
+            this,
+            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         )[SearchViewModel::class.java]
-        setContentView(binding.root)
         scrapApiService = RetrofitProvider.getRetrofit(getString(R.string.backend_base_url))
             .create(ScrapAPI::class.java)
-        val extras = intent.extras ?: throw IllegalStateException("Extras are required")
         category =
-            extras.getString("category") ?: throw IllegalStateException("Category not provided")
-        query = extras.getString("query") ?: throw IllegalStateException("Query not provided")
-        loadingDialog = LoadingDialog(this)
+            arguments?.getString("category") ?: throw IllegalStateException("Category not provided")
+        query = arguments?.getString("query") ?: throw IllegalStateException("Query not provided")
+        loadingDialog = LoadingDialog(layoutInflater, requireContext())
         loadingDialog.startLoading()
         lifecycleScope.launch(Dispatchers.IO) {
             val productsResponse = scrapApiService.getProducts(category, query).awaitResponse()
             withContext(Dispatchers.Main) {
                 responseHandler.handleResponse(
                     productsResponse,
-                    this@ProductListActivity::initialize,
-                    this@ProductListActivity::handleError
+                    this@ProductListFragment::initialize,
+                    this@ProductListFragment::handleError
                 )
             }
         }
+        return binding.root
     }
 
     override fun onDestroy() {
@@ -84,25 +76,19 @@ class ProductListActivity : AppCompatActivity() {
         loadingDialog.dismiss()
     }
 
-    private fun goToMain() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-    }
-
     private fun handleError(errorResponse: ErrorResponse) {
-        ErrorDialog(this, errorResponse)
-            .show(this::goToMain)
+        ErrorDialog(layoutInflater, requireContext(), errorResponse)
+            .show()
         loadingDialog.dismiss()
     }
 
     private fun initialize(products: List<Product>) {
         this.products = products
         val recyclerViewAdapter =
-            ProductsListElementAdapter(applicationContext, products)
+            ProductsListElementAdapter(requireContext(), products)
         binding.productsListRecycleView.adapter = recyclerViewAdapter
-        binding.productsListRecycleView.layoutManager = LinearLayoutManager(applicationContext)
         binding.productsListRecycleView.addItemDecoration(
-            DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+            DividerItemDecoration(requireActivity(), DividerItemDecoration.VERTICAL)
         )
         loadingDialog.stopLoading()
     }

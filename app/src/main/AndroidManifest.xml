@@ -13,18 +13,6 @@
         android:theme="@style/Theme.ShoppingAssistant"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".searches.SearchListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".settings.SettingsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".products.FilterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".products.ProductListActivity"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

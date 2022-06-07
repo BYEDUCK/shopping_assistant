@@ -1,16 +1,17 @@
 package com.byeduck.shoppingassistant.dialogs
 
-import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
+import android.view.LayoutInflater
 import com.byeduck.shoppingassistant.databinding.LoadingDialogBinding
 
-class LoadingDialog(activity: Activity) {
+class LoadingDialog(layoutInflater: LayoutInflater, context: Context) {
 
     private val dialog: AlertDialog
 
     init {
-        val dialogBinding = LoadingDialogBinding.inflate(activity.layoutInflater)
-        dialog = AlertDialog.Builder(activity)
+        val dialogBinding = LoadingDialogBinding.inflate(layoutInflater)
+        dialog = AlertDialog.Builder(context)
             .setView(dialogBinding.root)
             .setCancelable(false)
             .create()
