@@ -12,7 +12,7 @@ interface SearchEntityDao {
 
     @Insert
     @Transaction
-    suspend fun insert(entity: SearchEntity): Long
+    fun insert(entity: SearchEntity)
 
     @Query("SELECT * FROM searches")
     fun getAll(): LiveData<List<SearchEntity>>

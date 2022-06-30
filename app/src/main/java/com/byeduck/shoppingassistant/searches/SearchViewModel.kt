@@ -21,8 +21,8 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
         allSearches = repository.allSearches
     }
 
-    suspend fun addShoppingList(entity: SearchEntity): Long {
-        return withContext(viewModelScope.coroutineContext + Dispatchers.IO) {
+    suspend fun addShoppingList(entity: SearchEntity) {
+        withContext(viewModelScope.coroutineContext + Dispatchers.IO) {
             repository.insert(entity)
         }
     }

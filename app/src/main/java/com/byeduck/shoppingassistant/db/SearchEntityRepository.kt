@@ -6,7 +6,7 @@ class SearchEntityRepository(private val searchEntityDao: SearchEntityDao) {
 
     val allSearches = searchEntityDao.getAll()
 
-    suspend fun insert(entity: SearchEntity): Long {
-        return searchEntityDao.insert(entity)
+    fun insert(entity: SearchEntity) {
+        searchEntityDao.insert(entity)
     }
 }

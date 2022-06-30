@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
+import com.byeduck.shoppingassistant.HomePagerFragmentDirections
 import com.byeduck.shoppingassistant.R
 import com.byeduck.shoppingassistant.ResponseHandler
 import com.byeduck.shoppingassistant.databinding.FragmentFilterBinding
@@ -31,7 +33,7 @@ class FilterFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentFilterBinding.inflate(inflater, container, false)
         loadingDialog = LoadingDialog(layoutInflater, requireContext())
         scrapAPI = RetrofitProvider.getRetrofit(getString(R.string.backend_base_url))
@@ -71,11 +73,12 @@ class FilterFragment : Fragment() {
         binding.showProductsButton.setOnClickListener {
             val query = binding.queryTxt.text.toString()
             val category = categories[binding.categoriesSpinner.selectedItemPosition]
-//            val intent = Intent(this, ProductListFragment::class.java).apply {
-//                putExtra("category", category)
-//                putExtra("query", query)
-//            }
-//            startActivity(intent)
+            val directions =
+                HomePagerFragmentDirections.actionHomePagerFragmentToProductListFragment(
+                    query,
+                    category
+                )
+            it.findNavController().navigate(directions)
         }
         loadingDialog.stopLoading()
     }

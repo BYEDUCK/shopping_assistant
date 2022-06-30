@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.byeduck.shoppingassistant.R
 import com.byeduck.shoppingassistant.ResponseHandler
 import com.byeduck.shoppingassistant.databinding.FragmentProductListBinding
@@ -24,6 +25,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.awaitResponse
 
+private const val CATEGORY_PARAM = "category"
+private const val QUERY_PARAM = "query"
+
 class ProductListFragment : Fragment() {
 
     private val responseHandler = ResponseHandler()
@@ -34,6 +38,16 @@ class ProductListFragment : Fragment() {
     private lateinit var category: String
     private lateinit var query: String
     private lateinit var products: List<Product>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            query = it.getString(QUERY_PARAM)
+                ?: throw IllegalStateException("Need query to create fragment")
+            category = it.getString(CATEGORY_PARAM)
+                ?: throw IllegalStateException("Need category to create fragment")
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,9 +67,6 @@ class ProductListFragment : Fragment() {
         )[SearchViewModel::class.java]
         scrapApiService = RetrofitProvider.getRetrofit(getString(R.string.backend_base_url))
             .create(ScrapAPI::class.java)
-        category =
-            arguments?.getString("category") ?: throw IllegalStateException("Category not provided")
-        query = arguments?.getString("query") ?: throw IllegalStateException("Query not provided")
         loadingDialog = LoadingDialog(layoutInflater, requireContext())
         loadingDialog.startLoading()
         lifecycleScope.launch(Dispatchers.IO) {
@@ -87,6 +98,7 @@ class ProductListFragment : Fragment() {
         val recyclerViewAdapter =
             ProductsListElementAdapter(requireContext(), products)
         binding.productsListRecycleView.adapter = recyclerViewAdapter
+        binding.productsListRecycleView.layoutManager = LinearLayoutManager(context)
         binding.productsListRecycleView.addItemDecoration(
             DividerItemDecoration(requireActivity(), DividerItemDecoration.VERTICAL)
         )
