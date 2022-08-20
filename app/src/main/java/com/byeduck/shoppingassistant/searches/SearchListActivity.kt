@@ -18,12 +18,12 @@ class SearchListActivity : AppCompatActivity() {
             this, ViewModelProvider.AndroidViewModelFactory.getInstance(application)
         )[SearchViewModel::class.java]
         val recyclerViewAdapter =
-            SearchesListElementAdapter(
-                applicationContext,
-                supportFragmentManager,
-                searchViewModel,
-                this
-            )
+            SearchesListElementAdapter(applicationContext, supportFragmentManager)
+        searchViewModel.allSearches.observe(this) {
+            if (!it.isNullOrEmpty()) {
+                recyclerViewAdapter.submitList(it)
+            }
+        }
         binding.searchesListRecyclerView.adapter = recyclerViewAdapter
         binding.searchesListRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
         binding.searchesListRecyclerView.addItemDecoration(

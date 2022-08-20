@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.byeduck.shoppingassistant.db.dao.SearchEntityDao
 
-@Database(entities = [SearchEntity::class], version = 1)
+@Database(entities = [SearchEntity::class], version = 2)
 @TypeConverters(Converters::class)
 abstract class AppDb : RoomDatabase() {
 
