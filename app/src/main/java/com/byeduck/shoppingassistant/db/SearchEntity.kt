@@ -11,6 +11,8 @@ data class SearchEntity(
     var products: List<Product>,
     var query: String,
     var category: String,
+    var minPrice: Int?,
+    var maxPrice: Int?,
     var date: ZonedDateTime = ZonedDateTime.now().withZoneSameLocal(ZoneOffset.UTC)
 ) : Identifiable {
 

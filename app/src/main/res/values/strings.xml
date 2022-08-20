@@ -22,4 +22,6 @@
     <string name="date_fromat">dd/MM/yyyy hh:mm</string>
     <string name="assist">ASSIST</string>
     <string name="close">CLOSE</string>
+    <string name="min_price">Min price:</string>
+    <string name="max_price">Max price</string>
 </resources>

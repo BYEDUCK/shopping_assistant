@@ -72,9 +72,13 @@ class FilterActivity : AppCompatActivity() {
         binding.showProductsButton.setOnClickListener {
             val query = binding.queryTxt.text.toString()
             val category = categories[binding.categoriesSpinner.selectedItemPosition]
+            val minPrice = binding.minPrice.text.toString().toIntOrNull()
+            val maxPrice = binding.maxPrice.text.toString().toIntOrNull()
             val intent = Intent(this, ProductListActivity::class.java).apply {
                 putExtra("category", category)
                 putExtra("query", query)
+                putExtra("minPrice", minPrice)
+                putExtra("maxPrice", maxPrice)
             }
             startActivity(intent)
         }

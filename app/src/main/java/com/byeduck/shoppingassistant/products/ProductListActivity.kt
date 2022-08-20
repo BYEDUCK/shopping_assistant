@@ -36,12 +36,14 @@ class ProductListActivity : AppCompatActivity() {
     private lateinit var category: String
     private lateinit var query: String
     private lateinit var products: List<Product>
+    private var minPrice: Int? = null
+    private var maxPrice: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProductListBinding.inflate(layoutInflater)
         binding.persistSearchButton.setOnClickListener {
-            val entity = SearchEntity(products, query, category)
+            val entity = SearchEntity(products, query, category, minPrice, maxPrice)
             lifecycleScope.launch {
                 val id = searchViewModel.addShoppingList(entity)
                 Toast.makeText(
@@ -65,10 +67,13 @@ class ProductListActivity : AppCompatActivity() {
         category =
             extras.getString("category") ?: throw IllegalStateException("Category not provided")
         query = extras.getString("query") ?: throw IllegalStateException("Query not provided")
+        minPrice = extras.get("minPrice") as Int?
+        maxPrice = extras.get("maxPrice") as Int?
         loadingDialog = LoadingDialog(this)
         loadingDialog.startLoading()
         lifecycleScope.launch(Dispatchers.IO) {
-            val productsResponse = scrapApiService.getProducts(category, query).awaitResponse()
+            val productsResponse =
+                scrapApiService.getProducts(category, query, minPrice, maxPrice).awaitResponse()
             withContext(Dispatchers.Main) {
                 responseHandler.handleResponse(
                     productsResponse,
