@@ -32,7 +32,7 @@ class ProductsListElementAdapter(
             R.string.product_price, current.price
         )
         holder.binding.productScoreLabel.text = context.getString(
-            R.string.product_score, current.score.score, current.score.maxScore
+            R.string.product_score, current.reviewScore.score, current.reviewScore.maxScore
         )
     }
 
