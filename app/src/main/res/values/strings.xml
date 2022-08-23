@@ -34,4 +34,8 @@
     <string name="delete">DELETE</string>
     <string name="del_x">X</string>
     <string name="add">Add</string>
+    <string name="e_mail">E-mail</string>
+    <string name="password">Password</string>
+    <string name="log_in">LOG IN</string>
+    <string name="sign_up">SIGN UP</string>
 </resources>
