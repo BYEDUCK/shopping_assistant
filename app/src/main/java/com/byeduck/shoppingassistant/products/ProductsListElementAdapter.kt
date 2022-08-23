@@ -27,11 +27,12 @@ class ProductsListElementAdapter(
 
     override fun onBindViewHolder(holder: ProductsListElementViewHolder, position: Int) {
         val current = products[position]
-        holder.binding.productNameLabel.text = current.name
-        holder.binding.productPriceLabel.text = context.getString(
+        holder.binding.productName.text = current.name
+        holder.binding.productBrandName.text = current.brandName
+        holder.binding.productPrice.text = context.getString(
             R.string.product_price, current.price
         )
-        holder.binding.productScoreLabel.text = context.getString(
+        holder.binding.productScore.text = context.getString(
             R.string.product_score, current.reviewScore.score, current.reviewScore.maxScore
         )
     }
