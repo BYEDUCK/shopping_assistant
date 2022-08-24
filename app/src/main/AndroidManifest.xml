@@ -13,6 +13,9 @@
         android:theme="@style/Theme.ShoppingAssistant"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ranked.RankedProductsActivity"
+            android:exported="false" />
+        <activity
             android:name=".login.LoginActivity"
             android:exported="true">
             <intent-filter>

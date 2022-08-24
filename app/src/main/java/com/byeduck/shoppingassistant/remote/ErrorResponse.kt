@@ -4,8 +4,8 @@ data class ErrorResponse(val status: Int, val error: String, val requestId: Stri
 
     companion object {
 
-        fun getDefault(): ErrorResponse {
-            return ErrorResponse(500, "Unknown", "N/A")
+        fun getDefault(status: Int = 500): ErrorResponse {
+            return ErrorResponse(status, "Unknown", "N/A")
         }
     }
 }

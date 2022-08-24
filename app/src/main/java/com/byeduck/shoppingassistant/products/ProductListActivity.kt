@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.byeduck.shoppingassistant.GenericResponse
 import com.byeduck.shoppingassistant.MainActivity
 import com.byeduck.shoppingassistant.R
 import com.byeduck.shoppingassistant.ResponseHandler
@@ -21,6 +22,8 @@ import com.byeduck.shoppingassistant.remote.ErrorResponse
 import com.byeduck.shoppingassistant.remote.RetrofitProvider
 import com.byeduck.shoppingassistant.searches.SearchListActivity
 import com.byeduck.shoppingassistant.searches.SearchViewModel
+import com.google.gson.Gson
+import io.vavr.control.Try
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -94,8 +97,10 @@ class ProductListActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun handleError(errorResponse: ErrorResponse) {
-        ErrorDialog(this, errorResponse)
+    private fun handleError(errorResponse: GenericResponse) {
+        val parsed = Try.of { Gson().fromJson(errorResponse.body, ErrorResponse::class.java) }
+            .getOrElse(ErrorResponse.getDefault(errorResponse.status))
+        ErrorDialog(this, parsed)
             .show(this::goToMain)
         loadingDialog.dismiss()
     }

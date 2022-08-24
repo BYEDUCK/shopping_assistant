@@ -9,7 +9,9 @@ const val BRAND_IMPORTANCE_PREF_NAME = "brand_importance"
 const val RATING_IMPORTANCE_PREF_NAME = "rating_importance"
 const val AI_IMPORTANCE_PREF_NAME = "ai_importance"
 const val TRUSTED_BRANDS_PREF_NAME = "trusted_brands"
+const val TOP_PRODUCTS_COUNT = "top_products_count"
 const val IMPORTANCE_DEFAULT_VALUE = 0
+const val TOP_PRODUCTS_COUNT_DEFAULT_VALUE = 10
 const val TRUSTED_BRANDS_SEPARATOR = ":"
 
 fun parseTrustedBrands(brandText: String): Set<String> =
@@ -22,5 +24,6 @@ fun getAppConfig(sharedPreferences: SharedPreferences): AppConfig = AppConfig(
     sharedPreferences.getInt(AI_IMPORTANCE_PREF_NAME, IMPORTANCE_DEFAULT_VALUE),
     parseTrustedBrands(
         sharedPreferences.getString(TRUSTED_BRANDS_PREF_NAME, "") ?: ""
-    )
+    ),
+    sharedPreferences.getInt(TOP_PRODUCTS_COUNT, TOP_PRODUCTS_COUNT_DEFAULT_VALUE)
 )

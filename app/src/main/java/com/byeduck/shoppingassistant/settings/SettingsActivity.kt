@@ -5,13 +5,10 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.byeduck.shoppingassistant.MainActivity
+import com.byeduck.shoppingassistant.*
 import com.byeduck.shoppingassistant.databinding.ActivitySettingsBinding
-import com.byeduck.shoppingassistant.products.*
 
 class SettingsActivity : AppCompatActivity() {
-
-    private val trustedBrandsSeparator = ":"
 
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var binding: ActivitySettingsBinding
@@ -20,12 +17,13 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySettingsBinding.inflate(layoutInflater)
         brandsAdapter = BrandsListElementAdapter(this) {
             trustedBrands = trustedBrands - it
             updateTrustedBrandsDisplayName()
         }
         sharedPreferences = getSharedPreferences(PREF_FILE_NAME, MODE_PRIVATE)
+        val topProductsCount =
+            sharedPreferences.getInt(TOP_PRODUCTS_COUNT, TOP_PRODUCTS_COUNT_DEFAULT_VALUE)
         val savedPriceImportance =
             sharedPreferences.getInt(PRICE_IMPORTANCE_PREF_NAME, IMPORTANCE_DEFAULT_VALUE)
         val savedBrandImportance =
@@ -37,7 +35,7 @@ class SettingsActivity : AppCompatActivity() {
         trustedBrands = parseTrustedBrands(
             sharedPreferences.getString(TRUSTED_BRANDS_PREF_NAME, "") ?: ""
         )
-        binding.apply {
+        binding = ActivitySettingsBinding.inflate(layoutInflater).apply {
             priceSlider.setLabelFormatter(this@SettingsActivity::percentageLabelFormatter)
             brandSlider.setLabelFormatter(this@SettingsActivity::percentageLabelFormatter)
             ratingSlider.setLabelFormatter(this@SettingsActivity::percentageLabelFormatter)
@@ -45,6 +43,7 @@ class SettingsActivity : AppCompatActivity() {
             addTrustedBrandButton.setOnClickListener { addTrustedBrand() }
             trustedBrands.adapter = brandsAdapter
             trustedBrands.layoutManager = LinearLayoutManager(applicationContext)
+            topProductsCountText.text.append(topProductsCount.toString())
             priceSlider.value = savedPriceImportance.toFloat()
             brandSlider.value = savedBrandImportance.toFloat()
             ratingSlider.value = savedRatingImportance.toFloat()
@@ -67,13 +66,16 @@ class SettingsActivity : AppCompatActivity() {
         val brandImportance = binding.brandSlider.value.toInt()
         val ratingImportance = binding.ratingSlider.value.toInt()
         val aiImportance = binding.aiSlider.value.toInt()
-        val trustedBrandsSerialized = trustedBrands.joinToString(trustedBrandsSeparator)
+        val topProductsCount = binding.topProductsCountText.text.toString().toIntOrNull()
+            ?: TOP_PRODUCTS_COUNT_DEFAULT_VALUE
+        val trustedBrandsSerialized = trustedBrands.joinToString(TRUSTED_BRANDS_SEPARATOR)
         sharedPreferences.edit()
             .putInt(PRICE_IMPORTANCE_PREF_NAME, priceImportance)
             .putInt(BRAND_IMPORTANCE_PREF_NAME, brandImportance)
             .putInt(RATING_IMPORTANCE_PREF_NAME, ratingImportance)
             .putInt(AI_IMPORTANCE_PREF_NAME, aiImportance)
             .putString(TRUSTED_BRANDS_PREF_NAME, trustedBrandsSerialized)
+            .putInt(TOP_PRODUCTS_COUNT, topProductsCount)
             .apply()
         goToMainActivity()
     }
@@ -86,9 +88,6 @@ class SettingsActivity : AppCompatActivity() {
     private fun updateTrustedBrandsDisplayName() {
         brandsAdapter.submitList(trustedBrands.toMutableList())
     }
-
-    private fun parseTrustedBrands(brandText: String): Set<String> =
-        if (brandText.isBlank()) emptySet() else brandText.split(trustedBrandsSeparator).toSet()
 
     private fun addTrustedBrand() {
         trustedBrands = trustedBrands + binding.trustedBrandToAdd.text.toString()

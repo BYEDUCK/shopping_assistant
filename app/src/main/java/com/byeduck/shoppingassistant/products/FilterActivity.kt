@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.byeduck.shoppingassistant.GenericResponse
 import com.byeduck.shoppingassistant.MainActivity
 import com.byeduck.shoppingassistant.R
 import com.byeduck.shoppingassistant.ResponseHandler
@@ -14,6 +15,8 @@ import com.byeduck.shoppingassistant.dialogs.LoadingDialog
 import com.byeduck.shoppingassistant.products.remote.ScrapAPI
 import com.byeduck.shoppingassistant.remote.ErrorResponse
 import com.byeduck.shoppingassistant.remote.RetrofitProvider
+import com.google.gson.Gson
+import io.vavr.control.Try
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -51,8 +54,10 @@ class FilterActivity : AppCompatActivity() {
         loadingDialog.dismiss()
     }
 
-    private fun handleError(errorResponse: ErrorResponse) {
-        ErrorDialog(this, errorResponse)
+    private fun handleError(errorResponse: GenericResponse) {
+        val parsed = Try.of { Gson().fromJson(errorResponse.body, ErrorResponse::class.java) }
+            .getOrElse(ErrorResponse.getDefault(errorResponse.status))
+        ErrorDialog(this, parsed)
             .show(this::goToMain)
         loadingDialog.dismiss()
     }

@@ -17,8 +17,7 @@ class SearchListActivity : AppCompatActivity() {
         searchViewModel = ViewModelProvider(
             this, ViewModelProvider.AndroidViewModelFactory.getInstance(application)
         )[SearchViewModel::class.java]
-        val recyclerViewAdapter =
-            SearchesListElementAdapter(applicationContext, supportFragmentManager)
+        val recyclerViewAdapter = SearchesListElementAdapter(this)
         searchViewModel.allSearches.observe(this) {
             if (!it.isNullOrEmpty()) {
                 recyclerViewAdapter.submitList(it)

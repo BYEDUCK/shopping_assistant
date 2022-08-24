@@ -4,6 +4,7 @@
     <string name="show_filter">Filter</string>
     <string name="show_products">Show</string>
     <string name="backend_base_url">http://10.0.2.2:8080</string>
+    <string name="google_cloud_functions_url">https://europe-central2-shop-assistant-360218.cloudfunctions.net</string>
     <string name="products_query">Query:</string>
     <string name="loading">Loading…</string>
     <string name="product_price">%1$.2f PLN</string>
@@ -38,4 +39,6 @@
     <string name="password">Password</string>
     <string name="log_in">LOG IN</string>
     <string name="sign_up">SIGN UP</string>
+    <string name="rank">Rank</string>
+    <string name="top_products">TOP products</string>
 </resources>
