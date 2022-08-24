@@ -10,7 +10,7 @@ const val RATING_IMPORTANCE_PREF_NAME = "rating_importance"
 const val AI_IMPORTANCE_PREF_NAME = "ai_importance"
 const val TRUSTED_BRANDS_PREF_NAME = "trusted_brands"
 const val TOP_PRODUCTS_COUNT = "top_products_count"
-const val IMPORTANCE_DEFAULT_VALUE = 0
+const val IMPORTANCE_DEFAULT_VALUE = 50
 const val TOP_PRODUCTS_COUNT_DEFAULT_VALUE = 10
 const val TRUSTED_BRANDS_SEPARATOR = ":"
 

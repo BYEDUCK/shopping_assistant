@@ -59,7 +59,7 @@ class RankedProductsActivity : AppCompatActivity() {
 
     private fun initializeRecyclerView(rankedProducts: List<RankedProduct>) {
         val adapter = RankedProductsListElementAdapter(
-            rankedProducts.sortedByDescending { it.rank }.take(showProductsCount)
+            this, rankedProducts.sortedByDescending { it.rank }.take(showProductsCount)
         )
         binding.rankedProductsView.layoutManager = LinearLayoutManager(this)
         binding.rankedProductsView.adapter = adapter
